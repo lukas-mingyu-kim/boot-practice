@@ -67,7 +67,7 @@ public class PostsApiControllerTest {
     @Test
     public void Posts_수정된다() throws Exception {
         //given
-        Posts savedPosts = PostsRepository.save(Posts.builder()
+        Posts savedPosts = postsRepository.save(Posts.builder()
                 .title("title")
                 .content("content")
                 .author("author")
@@ -82,7 +82,7 @@ public class PostsApiControllerTest {
                 .content(expectedContent)
                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/posts" + updateId;
+        String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
 
         HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 
@@ -95,7 +95,7 @@ public class PostsApiControllerTest {
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Posts> all = postsRepository.findAll();
-        assertThat(all.get(0).getTitle()).isEqualTo(expectedContent);
+        assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
     }
 }
